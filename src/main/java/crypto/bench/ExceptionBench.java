@@ -7,6 +7,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.VerboseMode;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -29,14 +30,23 @@ public class ExceptionBench {
     }
 
     @Benchmark
-    public void useException() {
+    public void useUncheckedException() {
         try {
-            SampleUseException.find("Sha256");
+            SampleUseUncheckedException.find("Sha256");
         } catch (RuntimeException re) {
             // blank line, ignore the exception.
         }
     }
 
+    @Benchmark
+    public void useCheckedException() {
+        try {
+            SampleUseCheckedException.find("Sha256");
+        } catch (NoSuchAlgorithmException nsae) {
+            // blank line, ignore the exception.
+        }
+    }
+/*
     @Benchmark
     public void useTwoStackException() {
         try {
@@ -75,10 +85,16 @@ public class ExceptionBench {
             // blank line, ignore the failure.
         }
     }
-
-    private static class SampleUseException {
+*/
+    private static class SampleUseUncheckedException {
         private static void find(String algorithm) {
             throw new RuntimeException("No such algorithm: " + algorithm);
+        }
+    }
+
+    private static class SampleUseCheckedException {
+        private static void find(String algorithm) throws NoSuchAlgorithmException {
+            throw new NoSuchAlgorithmException("No such algorithm: " + algorithm);
         }
     }
 
@@ -102,7 +118,7 @@ public class ExceptionBench {
 
     private static class SampleUseTwoStacks {
         private static void find(String algorithm) {
-            SampleUseException.find(algorithm);
+            SampleUseUncheckedException.find(algorithm);
         }
     }
 
