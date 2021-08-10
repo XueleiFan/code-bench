@@ -7,6 +7,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.VerboseMode;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.Throughput)
@@ -37,6 +38,24 @@ public class ExceptionBench {
     }
 
     @Benchmark
+    public void useTwoStackException() {
+        try {
+            SampleUseTwoStacks.find("Sha256");
+        } catch (RuntimeException re) {
+            // blank line, ignore the exception.
+        }
+    }
+
+    @Benchmark
+    public void useThreeStackException() {
+        try {
+            SampleUseThreeStacks.find("Sha256");
+        } catch (RuntimeException re) {
+            // blank line, ignore the exception.
+        }
+    }
+
+    @Benchmark
     public void useErrorCode() {
         if (SampleUseErrorCode.find("Sha256") != 0) {
             // blank line, ignore the failure.
@@ -46,6 +65,13 @@ public class ExceptionBench {
     @Benchmark
     public void useNullPointer() {
         if (SampleUseNullPointer.find("Sha256") == null) {
+            // blank line, ignore the failure.
+        }
+    }
+
+    @Benchmark
+    public void useOptional() {
+        if (!SampleUseOptional.find("Sha256").isPresent()) {
             // blank line, ignore the failure.
         }
     }
@@ -65,6 +91,24 @@ public class ExceptionBench {
     private static class SampleUseNullPointer {
         private static SampleUseNullPointer find(String algorithm) {
             return null;
+        }
+    }
+
+    private static class SampleUseOptional {
+        private static Optional<SampleUseOptional> find(String algorithm) {
+            return Optional.empty();
+        }
+    }
+
+    private static class SampleUseTwoStacks {
+        private static void find(String algorithm) {
+            SampleUseException.find(algorithm);
+        }
+    }
+
+    private static class SampleUseThreeStacks {
+        private static void find(String algorithm) {
+            SampleUseTwoStacks.find(algorithm);
         }
     }
 }
