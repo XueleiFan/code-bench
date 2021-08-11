@@ -39,6 +39,13 @@ public class ExceptionBench {
     }
 
     @Benchmark
+    public void useReturnedException() {
+        if (SampleReturnException.find("Sha256") != null) {
+            // blank line, ignore the failure.
+        }
+    }
+
+    @Benchmark
     public void useCheckedException() {
         try {
             SampleUseCheckedException.find("Sha256");
@@ -46,7 +53,7 @@ public class ExceptionBench {
             // blank line, ignore the exception.
         }
     }
-/*
+
     @Benchmark
     public void useTwoStackException() {
         try {
@@ -85,7 +92,7 @@ public class ExceptionBench {
             // blank line, ignore the failure.
         }
     }
-*/
+
     private static class SampleUseUncheckedException {
         private static void find(String algorithm) {
             throw new RuntimeException("No such algorithm: " + algorithm);
@@ -101,6 +108,12 @@ public class ExceptionBench {
     private static class SampleUseErrorCode {
         private static int find(String algorithm) {
             return -1;
+        }
+    }
+
+    private static class SampleReturnException {
+        private static Exception find(String algorithm) {
+            return new NoSuchAlgorithmException("No such algorithm: " + algorithm);
         }
     }
 
