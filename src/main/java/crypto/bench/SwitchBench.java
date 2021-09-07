@@ -19,8 +19,7 @@ public class SwitchBench {
     private static final String[] ops =
             new String[] {"SHA-1", "SHA-256", "SHA-384", "SHA-521"};
 
-    // @Param({"SHA-1", "SHA-256", "SHA-384", "SHA-521", "SHA-128" })
-    @Param({"SHA-256"})
+    @Param({"SHA-1", "SHA-256", "SHA-384", "SHA-521"})
     private String op;
 
     public static void main(String[] args) throws RunnerException {
