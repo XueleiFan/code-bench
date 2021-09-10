@@ -9,5 +9,8 @@
         <module name="crypto.bench" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="crypto.bench" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
