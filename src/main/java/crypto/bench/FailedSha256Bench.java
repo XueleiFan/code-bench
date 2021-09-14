@@ -34,10 +34,11 @@ public class FailedSha256Bench {
     }
 
     public static void main(String[] args) throws RunnerException {
-        System.setProperty("io.netty.handler.ssl.noOpenSsl", "true");
         Options options = new OptionsBuilder()
-                .verbosity(VerboseMode.NORMAL)
-                .include(".*" + FailedSha256Bench.class.getSimpleName() + ".*")
+                .include(FailedSha256Bench.class.getSimpleName())
+                .forks(3)
+                .warmupIterations(5)
+                .measurementIterations(5)
                 .build();
 
         new Runner(options).run();

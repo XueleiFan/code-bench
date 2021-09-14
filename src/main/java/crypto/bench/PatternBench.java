@@ -19,10 +19,11 @@ public class PatternBench {
     private static final Shape shape = new Shape.Circle(10);
 
     public static void main(String[] args) throws RunnerException {
-        System.setProperty("io.netty.handler.ssl.noOpenSsl", "true");
         Options options = new OptionsBuilder()
-                .verbosity(VerboseMode.NORMAL)
-                .include(".*" + PatternBench.class.getSimpleName() + ".*")
+                .include(PatternBench.class.getSimpleName())
+                .forks(3)
+                .warmupIterations(5)
+                .measurementIterations(5)
                 .build();
 
         new Runner(options).run();

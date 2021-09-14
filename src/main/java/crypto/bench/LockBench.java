@@ -23,10 +23,11 @@ public class LockBench {
 
 
     public static void main(String[] args) throws RunnerException {
-        System.setProperty("io.netty.handler.ssl.noOpenSsl", "true");
         Options options = new OptionsBuilder()
-                .verbosity(VerboseMode.NORMAL)
-                .include(".*" + LockBench.class.getSimpleName() + ".*")
+                .include(LockBench.class.getSimpleName())
+                .forks(3)
+                .warmupIterations(5)
+                .measurementIterations(5)
                 .build();
 
         new Runner(options).run();

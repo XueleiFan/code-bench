@@ -17,10 +17,11 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 5)
 public class RecordBench {
     public static void main(String[] args) throws RunnerException {
-        System.setProperty("io.netty.handler.ssl.noOpenSsl", "true");
         Options options = new OptionsBuilder()
-                .verbosity(VerboseMode.NORMAL)
-                .include(".*" + RecordBench.class.getSimpleName() + ".*")
+                .include(RecordBench.class.getSimpleName())
+                .forks(3)
+                .warmupIterations(5)
+                .measurementIterations(5)
                 .build();
 
         new Runner(options).run();
