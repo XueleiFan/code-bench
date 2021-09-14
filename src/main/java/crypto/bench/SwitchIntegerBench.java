@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Fork(3)
 @Warmup(iterations = 5)
 @Measurement(iterations = 5)
-public class SwiExprBench {
+public class SwitchIntegerBench {
     private static final int month;
     private static final int year;
 
@@ -27,7 +27,7 @@ public class SwiExprBench {
 
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
-                .include(SwiExprBench.class.getSimpleName())
+                .include(SwitchIntegerBench.class.getSimpleName())
                 .forks(3)
                 .warmupIterations(5)
                 .measurementIterations(5)
@@ -37,7 +37,7 @@ public class SwiExprBench {
     }
 
     @Benchmark
-    public int useIfElse() {
+    public int useIfElseStatement() {
         if (month == Calendar.JANUARY ||
             month == Calendar.MARCH ||
             month == Calendar.MAY ||
@@ -92,7 +92,7 @@ public class SwiExprBench {
     }
 
     @Benchmark
-    public int useSwitch() {
+    public int useSwitchExpression() {
         return switch (month) {
             case Calendar.JANUARY,
                     Calendar.MARCH,

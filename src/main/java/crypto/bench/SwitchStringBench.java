@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Fork(3)
 @Warmup(iterations = 5)
 @Measurement(iterations = 5)
-public class SwitchBench {
+public class SwitchStringBench {
     private static final String[] ops =
             new String[] {"SHA-1", "SHA-256", "SHA-384", "SHA-521"};
 
@@ -23,7 +23,7 @@ public class SwitchBench {
 
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
-                .include(SwitchBench.class.getSimpleName())
+                .include(SwitchStringBench.class.getSimpleName())
                 .forks(3)
                 .warmupIterations(5)
                 .measurementIterations(5)
@@ -33,7 +33,7 @@ public class SwitchBench {
     }
 
     @Benchmark
-    public String useIfElseExpression() {
+    public String useIfElseStatement() {
         if (op.equals("SHA-1")) {
             return ops[0];
         } else if (op.equals("SHA-256")) {
@@ -56,5 +56,21 @@ public class SwitchBench {
             case "SHA-512" -> ops[3];
             default -> "";
         };
+    }
+
+    @Benchmark
+    public String useSwitchStatement() {
+        switch (op) {
+            case "SHA-1":
+                return ops[0];
+            case "SHA-256":
+                return ops[1];
+            case "SHA-384":
+                return ops[2];
+            case "SHA-512":
+                return ops[3];
+            default:
+                return "";
+        }
     }
 }
