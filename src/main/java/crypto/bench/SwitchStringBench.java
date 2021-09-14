@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 5)
 public class SwitchStringBench {
     private static final String[] ops =
-            new String[] {"SHA-1", "SHA-256", "SHA-384", "SHA-521"};
+            new String[] {"SHA-1", "SHA-256", "SHA-384", "SHA-512"};
 
-    @Param({"SHA-1", "SHA-256", "SHA-384", "SHA-521"})
+    @Param({"SHA-1", "SHA-256", "SHA-384", "SHA-512"})
     private String op;
 
     public static void main(String[] args) throws RunnerException {
