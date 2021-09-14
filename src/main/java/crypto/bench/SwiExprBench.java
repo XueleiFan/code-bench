@@ -5,7 +5,6 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import org.openjdk.jmh.runner.options.VerboseMode;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -16,13 +15,19 @@ import java.util.concurrent.TimeUnit;
 @Fork(3)
 @Warmup(iterations = 5)
 @Measurement(iterations = 5)
-public class SwitchExpression {
-    private int month;
-    private int year;
+public class SwiExprBench {
+    private static final int month;
+    private static final int year;
+
+    static {
+        Calendar today = Calendar.getInstance();
+        month = today.get(Calendar.MONTH);
+        year = today.get(Calendar.YEAR);
+    }
 
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
-                .include(SwitchExpression.class.getSimpleName())
+                .include(SwiExprBench.class.getSimpleName())
                 .forks(3)
                 .warmupIterations(5)
                 .measurementIterations(5)
@@ -31,15 +36,8 @@ public class SwitchExpression {
         new Runner(options).run();
     }
 
-    @Setup(Level.Trial)
-    public void setup() {
-        Calendar today = Calendar.getInstance();
-        this.month = today.get(Calendar.MONTH);
-        this.year = today.get(Calendar.YEAR);
-    }
-
     @Benchmark
-    public int useIfElseExpression() {
+    public int useIfElse() {
         if (month == Calendar.JANUARY ||
             month == Calendar.MARCH ||
             month == Calendar.MAY ||
@@ -66,7 +64,7 @@ public class SwitchExpression {
     }
 
     @Benchmark
-    public int useSwitchClause() {
+    public int useSwitchStatement() {
         switch (month) {
             case Calendar.JANUARY:
             case Calendar.MARCH:
@@ -94,7 +92,7 @@ public class SwitchExpression {
     }
 
     @Benchmark
-    public int useSwitchExpression() {
+    public int useSwitch() {
         return switch (month) {
             case Calendar.JANUARY,
                     Calendar.MARCH,

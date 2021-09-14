@@ -5,15 +5,13 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import org.openjdk.jmh.runner.options.VerboseMode;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Thread)
+@Threads(3)
 @Fork(3)
 @Warmup(iterations = 5)
 @Measurement(iterations = 5)
@@ -25,6 +23,7 @@ public class LockBench {
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
                 .include(LockBench.class.getSimpleName())
+                .threads(3)
                 .forks(3)
                 .warmupIterations(5)
                 .measurementIterations(5)
