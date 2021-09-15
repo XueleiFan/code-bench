@@ -1,4 +1,4 @@
-package crypto.bench;
+package code.bench;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -6,6 +6,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -16,11 +17,24 @@ import java.util.concurrent.TimeUnit;
 @Fork(3)
 @Warmup(iterations = 5)
 @Measurement(iterations = 5)
-public class ExceptionBench {
+public class FailedSha256Bench {
+    private static final byte[] message = "Hello, world!".getBytes();
+    private static final MessageDigest sha256;
+
+    static {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (Exception ex) {
+            md = null;
+        }
+
+        sha256 = md;
+    }
 
     public static void main(String[] args) throws RunnerException {
         Options options = new OptionsBuilder()
-                .include(ExceptionBench.class.getSimpleName())
+                .include(FailedSha256Bench.class.getSimpleName())
                 .forks(3)
                 .warmupIterations(5)
                 .measurementIterations(5)
@@ -93,38 +107,48 @@ public class ExceptionBench {
         }
     }
 
+    private static byte[] digest() {
+        return sha256.digest(message);
+    }
+
     private static class SampleUseUncheckedException {
         private static void find(String algorithm) {
+            digest();
             throw new RuntimeException("No such algorithm: " + algorithm);
         }
     }
 
     private static class SampleUseCheckedException {
         private static void find(String algorithm) throws NoSuchAlgorithmException {
+            digest();
             throw new NoSuchAlgorithmException("No such algorithm: " + algorithm);
         }
     }
 
     private static class SampleUseErrorCode {
         private static int find(String algorithm) {
+            digest();
             return -1;
         }
     }
 
     private static class SampleReturnedException {
         private static Exception find(String algorithm) {
+            digest();
             return new NoSuchAlgorithmException("No such algorithm: " + algorithm);
         }
     }
 
     private static class SampleUseNullPointer {
         private static SampleUseNullPointer find(String algorithm) {
+            digest();
             return null;
         }
     }
 
     private static class SampleUseOptional {
         private static Optional<SampleUseOptional> find(String algorithm) {
+            digest();
             return Optional.empty();
         }
     }

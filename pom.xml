@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>crypto.bench</groupId>
-    <artifactId>crypto.bench</artifactId>
+    <groupId>code.bench</groupId>
+    <artifactId>code.bench</artifactId>
     <version>1.32</version>
     <packaging>jar</packaging>
 
-    <name>Java crypto benchmarks</name>
+    <name>Java code benchmarks</name>
 
     <dependencies>
         <dependency>

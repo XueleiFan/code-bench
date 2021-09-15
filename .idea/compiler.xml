@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="crypto.bench" />
+        <module name="code.bench" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="crypto.bench" target="17" />
+      <module name="code.bench" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package crypto.bench;
+package code.bench;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
