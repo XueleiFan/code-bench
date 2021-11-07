@@ -38,7 +38,7 @@ public class SwitchPatternMatch {
 
         return null;
     }
-/*
+
     @Benchmark
     public Shape.Circle useIfElseCast() {
         if (shape instanceof Shape.Square square) {
@@ -49,7 +49,6 @@ public class SwitchPatternMatch {
 
         return null;
     }
- */
 
     @Benchmark
     public Shape.Circle useSwitchPattern() {
